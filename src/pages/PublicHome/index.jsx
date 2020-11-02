@@ -6,7 +6,7 @@ import { RootStoresContext } from "../../stores/RootStore";
 import styles from "./styles.module.scss";
 
 import InitialPage from "../InitialPage";
-import { Box, Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 
 const HomeView = () => {
   const rootStore = useContext(RootStoresContext);
