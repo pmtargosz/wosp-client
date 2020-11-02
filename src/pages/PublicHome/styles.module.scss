@@ -1,0 +1,28 @@
+.container {
+  background-image: url("https://placeimg.com/640/480/any");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+
+  .titleHeader {
+    margin-top: 12px;
+  }
+
+  .svgTitle {
+    color: white;
+
+    text {
+      fill: white;
+      stroke-linejoin: round;
+      stroke-width: 0.5px;
+      stroke: black;
+      text-anchor: middle;
+      transform: translateX(50%);
+    }
+  }
+
+  .content {
+    background-color: rgba(black, 0.8);
+    color: white;
+  }
+}

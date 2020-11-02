@@ -1,0 +1,13 @@
+.progress {
+  margin: 0 auto;
+}
+
+.container {
+  max-height: 400px;
+}
+
+.row {
+  &:nth-of-type(odd) {
+    background-color: #fafafd;
+  }
+}

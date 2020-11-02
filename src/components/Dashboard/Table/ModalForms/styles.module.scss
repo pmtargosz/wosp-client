@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .input {
+    margin: 8px;
+    flex: 1;
+  }
+
+  .actions {
+    flex: 1 1 100%;
+  }
+
+  .progress {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

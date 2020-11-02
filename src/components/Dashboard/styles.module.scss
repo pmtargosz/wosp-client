@@ -1,0 +1,29 @@
+.paper {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 16px;
+}
+
+.progressContainer {
+  .progress {
+    display: block;
+    margin: auto;
+  }
+}
+
+.title {
+  text-align: center;
+}
+
+.paperUser {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  padding: 16px;
+}
+
+.main {
+  padding: 0 16px;
+}

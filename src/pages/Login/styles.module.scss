@@ -1,0 +1,28 @@
+.login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 64px;
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+}
+
+.form {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.submit {
+  position: relative;
+}
+
+.progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -12px;
+  margin-left: -12px;
+}
