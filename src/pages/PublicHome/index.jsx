@@ -33,7 +33,7 @@ const ResultItem = ({ name, people, target }) => {
           <div
             className={styles.bar}
             style={{
-              width: `calc(${percent}% - 12px)`,
+              width: `calc(${percent}%)`,
             }}
           ></div>
         </div>

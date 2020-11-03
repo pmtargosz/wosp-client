@@ -6,6 +6,7 @@
   background-size: cover;
   font-weight: 600;
   height: 100vh;
+  overflow: auto;
   text-rendering: optimizelegibility;
   text-shadow: 0 0 1px rgba(black, 0.6);
 
@@ -59,10 +60,19 @@
   }
 
   .progress {
+    // background-color: transparent;
+    // border-radius: 25px;
+    // border: 2px solid white;
+    // padding: 4px;
+    // position: relative;
+    // overflow: hidden;
+
+    // new
     background-color: transparent;
     border-radius: 25px;
-    border: 2px solid white;
-    padding: 4px;
+    border: 6px solid transparent;
+    box-shadow: 0px 0px 0px 2px white;
+    overflow: hidden;
     position: relative;
   }
 
@@ -74,12 +84,21 @@
   }
 
   .bar {
-    background-color: white;
+    // background-color: white;
+    // border-radius: 25px;
+    // height: calc(100% - 12px);
+    // left: 6px;
+    // position: absolute;
+    // top: 50%;
+    // transform: translateY(-50%);
+    // transition: width 0.5s;
+
+    // new
+    background-color: transparent;
     border-radius: 25px;
-    height: calc(100% - 12px);
-    left: 6px;
+    height: 100%;
+    left: 0;
     position: absolute;
-    text-align: left;
     top: 50%;
     transform: translateY(-50%);
     transition: width 0.5s;
