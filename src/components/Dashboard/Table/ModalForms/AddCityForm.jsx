@@ -66,7 +66,6 @@ const AddCityForm = observer(({ title }) => {
             disabled={addCityForm.isSubmitting}
             id="name"
             label="Miasto"
-            margin="normal"
             name="name"
             onChange={addCityForm.handleChange}
             required
@@ -84,11 +83,13 @@ const AddCityForm = observer(({ title }) => {
             className={styles.input}
             disabled={addCityForm.isSubmitting}
             id="people"
-            label="Uczestnikow"
-            margin="normal"
+            label="Uczestników"
             name="people"
             onChange={addCityForm.handleChange}
             type="number"
+            inputProps={{
+              min: 0,
+            }}
             value={addCityForm.values.people}
             variant="outlined"
           />

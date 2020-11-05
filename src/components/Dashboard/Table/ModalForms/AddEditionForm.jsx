@@ -37,6 +37,7 @@ const AddEditionForm = observer(({ title }) => {
       name: "",
       startDate: dateFns.date(),
       startDateTime: dateFns.date(),
+      endDate: dateFns.date(),
       target: 0,
     },
     validationSchema: Yup.object({
@@ -44,13 +45,14 @@ const AddEditionForm = observer(({ title }) => {
     }),
     onSubmit: async (values, { setFieldError }) => {
       try {
-        const { name, startDate, startDateTime, target } = values;
+        const { name, startDate, startDateTime, endDate, target } = values;
         const date = dateFns.format(startDate, "yyyy-MM-dd"); //dd/MM/yyyy
         const time = dateFns.format(startDateTime, "HH:mm"); //HH:mm
 
         await rootStore.editionsStore.addEdition({
           name,
           startDate: `${date} ${time}`,
+          endDate: dateFns.date(endDate),
           target,
           isActive: false,
           activeTimer: false,
@@ -84,11 +86,11 @@ const AddEditionForm = observer(({ title }) => {
         >
           <TextField
             autoFocus
+            fullWidth
             className={styles.input}
             disabled={addEditionForm.isSubmitting}
             id="name"
             label="Wydażenie"
-            margin="normal"
             name="name"
             onChange={addEditionForm.handleChange}
             required
@@ -136,16 +138,33 @@ const AddEditionForm = observer(({ title }) => {
                 "aria-label": "change time",
               }}
             />
+            <KeyboardTimePicker
+              inputVariant="outlined"
+              ampm={false}
+              id="endDate"
+              name="endDate"
+              label="Godzina rozpoczęcia"
+              className={styles.input}
+              value={addEditionForm.values.endDate}
+              onChange={(endDate) =>
+                addEditionForm.setFieldValue("endDate", endDate)
+              }
+              KeyboardButtonProps={{
+                "aria-label": "change time",
+              }}
+            />
           </MuiPickersUtilsProvider>
           <TextField
             className={styles.input}
             disabled={addEditionForm.isSubmitting}
             id="target"
             label="Cel"
-            margin="normal"
             name="target"
             onChange={addEditionForm.handleChange}
             type="number"
+            inputProps={{
+              min: 0,
+            }}
             value={addEditionForm.values.target}
             variant="outlined"
           />

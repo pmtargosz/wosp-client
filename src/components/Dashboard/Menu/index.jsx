@@ -10,7 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { ChevronLeft, Dashboard, People } from "@material-ui/icons";
+import { ChevronLeft, Dashboard } from "@material-ui/icons";
 
 import { RootStoresContext } from "../../../stores/RootStore";
 
@@ -21,7 +21,7 @@ const DashboardMenuList = () => {
 
   const itemData = [
     { name: "Dashboard", icon: <Dashboard /> },
-    { name: "Koordynatorzy", icon: <People /> },
+    // { name: "Koordynatorzy", icon: <People /> },
   ];
 
   const handlerItemClick = (name) => () => {

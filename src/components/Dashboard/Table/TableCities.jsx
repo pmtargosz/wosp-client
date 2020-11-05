@@ -22,8 +22,9 @@ import UpdateCityForm from "../Table/ModalForms/UpdateCityForm";
 
 const TableCitiesView = observer(() => {
   const rootStore = useContext(RootStoresContext);
-  const handleRemoveUser = (id) => async () => {
+  const handleRemoveUser = (id, city) => async () => {
     await rootStore.citiesStore.removeCity(id);
+    rootStore.usersStore.removeCity(city);
   };
 
   const tableBodyRows = toJS(rootStore.citiesStore.cities).map((city) => (
@@ -32,11 +33,11 @@ const TableCitiesView = observer(() => {
         modalType={<UpdateCityForm title="Edytuj miasto:" {...city} />}
       />
       <BodyCell>{city.name}</BodyCell>
-      <BodyCell>{city.people}</BodyCell>
+      <BodyCell align="center">{city.people}</BodyCell>
       <DeleteCell
         modalType={
           <ModalRemove
-            callback={handleRemoveUser(city.id)}
+            callback={handleRemoveUser(city.id, city.name)}
             msg={`Czy napewno chcesz usunać miasto: ${city.name}?`}
           />
         }
@@ -51,7 +52,7 @@ const TableCitiesView = observer(() => {
           <TableRow>
             <TableCell align="center"></TableCell>
             <TableCell align="left">Miasto</TableCell>
-            <TableCell align="left">Uczestników</TableCell>
+            <TableCell align="center">Uczestników</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>

@@ -34,26 +34,44 @@ const TableEditionsView = observer(() => {
   };
 
   const handleChangeActive = (values) => async () => {
-    const { id, name, target, startDate, isActive, activeTimer } = values;
+    const {
+      id,
+      name,
+      target,
+      startDate,
+      endDate,
+      isActive,
+      activeTimer,
+    } = values;
     rootStore.editionsStore.toggleActive(id);
     await rootStore.editionsStore.updateEdition({
       id,
       name,
       target,
       startDate,
+      endDate,
       isActive: !isActive,
       activeTimer: isActive ? false : activeTimer,
     });
   };
 
   const handleChangeTimer = (values) => async () => {
-    const { id, name, target, startDate, isActive, activeTimer } = values;
+    const {
+      id,
+      name,
+      target,
+      startDate,
+      endDate,
+      isActive,
+      activeTimer,
+    } = values;
     rootStore.editionsStore.toggleTimer(id);
     await rootStore.editionsStore.updateEdition({
       id,
       name,
       target,
       startDate,
+      endDate,
       isActive,
       activeTimer: !activeTimer,
     });
@@ -68,11 +86,16 @@ const TableEditionsView = observer(() => {
           }
         />
         <BodyCell>{edition.name}</BodyCell>
-        <BodyCell>{edition.target}</BodyCell>
-        <BodyCell>
+        <BodyCell align="center">{edition.target}</BodyCell>
+        <BodyCell align="center">
           {dateFns.format(dateFns.date(edition.startDate), "dd/MM/yyyy HH:mm")}
         </BodyCell>
-        <BodyCell>
+        <BodyCell align="center">
+          {edition.endDate !== undefined
+            ? dateFns.format(dateFns.date(edition.endDate), "HH:mm")
+            : ""}
+        </BodyCell>
+        <BodyCell align="center">
           <Tooltip title={edition.isActive ? "Dezaktywuj" : "Aktywuj"}>
             <Switch
               checked={edition.isActive}
@@ -82,7 +105,7 @@ const TableEditionsView = observer(() => {
             />
           </Tooltip>
         </BodyCell>
-        <BodyCell>
+        <BodyCell align="center">
           <Tooltip title={edition.activeTimer ? "Dezaktywuj" : "Aktywuj"}>
             <Switch
               checked={edition.activeTimer}
@@ -112,10 +135,11 @@ const TableEditionsView = observer(() => {
           <TableRow>
             <TableCell align="center"></TableCell>
             <TableCell align="left">Nazwa</TableCell>
-            <TableCell align="left">Cel</TableCell>
-            <TableCell align="left">Czas Rozpoczecia</TableCell>
-            <TableCell align="left">Status</TableCell>
-            <TableCell align="left">Aktywuj czas</TableCell>
+            <TableCell align="center">Cel</TableCell>
+            <TableCell align="center">Data Rozpoczecia</TableCell>
+            <TableCell align="center">Godzina Zakończenia</TableCell>
+            <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Aktywuj czas</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>

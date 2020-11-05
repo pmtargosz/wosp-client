@@ -93,7 +93,6 @@ const AddUserForm = observer(({ title }) => {
             disabled={addUserForm.isSubmitting}
             id="username"
             label="Nazwa użytkownika"
-            margin="normal"
             name="username"
             onChange={addUserForm.handleChange}
             required
@@ -115,7 +114,6 @@ const AddUserForm = observer(({ title }) => {
             disabled={addUserForm.isSubmitting}
             id="password"
             label="Hasło"
-            margin="normal"
             name="password"
             onChange={addUserForm.handleChange}
             required

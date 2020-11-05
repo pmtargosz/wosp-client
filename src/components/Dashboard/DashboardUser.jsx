@@ -84,7 +84,7 @@ const DashboardUser = observer(() => {
                     color="primary"
                     className={styles.title}
                   >
-                    Uczestinków
+                    Uczestników
                   </Typography>
                   <Typography
                     component="p"

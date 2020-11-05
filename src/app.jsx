@@ -34,12 +34,26 @@ const App = observer(() => {
           {rootStore.authStore.authUserLoading ? (
             <InitialPage />
           ) : rootStore.authStore.user ? (
-            <Redirect to="/dashboard" />
+            rootStore.authStore.user.isAdmin ? (
+              <Redirect to="/dashboard" />
+            ) : (
+              <Redirect to="/koordynator" />
+            )
           ) : (
             <Login />
           )}
         </Route>
         <Route path="/dashboard">
+          {rootStore.authStore.authUserLoading ? (
+            <InitialPage />
+          ) : !rootStore.authStore.authUserLoading &&
+            rootStore.authStore.user ? (
+            <Dashboard />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+        <Route path="/koordynator">
           {rootStore.authStore.authUserLoading ? (
             <InitialPage />
           ) : !rootStore.authStore.authUserLoading &&

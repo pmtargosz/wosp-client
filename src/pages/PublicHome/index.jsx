@@ -11,6 +11,42 @@ import InitialPage from "../InitialPage";
 
 import { ReactComponent as IndorRowing } from "../../files/indor_rowing.svg";
 
+const HomeInitView = () => {
+  return (
+    <Container
+      role="main"
+      component="main"
+      maxWidth={false}
+      className={styles.container}
+    >
+      <Grid container spacing={4} alignItems="center" justify="center">
+        <Grid item xs={10} className={styles.titleHeader}>
+          <svg viewBox="0 0 300 26" className={styles.svgTitle}>
+            <text x="0" dx="0" dy="1.2em">
+              Wiosłowanie dla WOŚP
+            </text>
+          </svg>
+        </Grid>
+        <Grid item xs={10} className={styles.titleSub}>
+          <svg viewBox="0 0 300 150" className={styles.svgTitle}>
+            <text x="0" dy="1.2em">
+              <tspan dy="1.2em" x="0" dx="0">
+                Już
+              </tspan>
+              <tspan dy="1.2em" x="0" dx="0">
+                niedługo
+              </tspan>
+              <tspan dy="1.2em" x="0" dx="0">
+                startujemy!
+              </tspan>
+            </text>
+          </svg>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
+
 const ResultItem = ({ name, people, target }) => {
   const meters = people * 500;
   const percent = ((meters / target) * 100).toFixed(2);
@@ -67,7 +103,7 @@ const HomeView = () => {
       <Grid container spacing={4} justify="center">
         <Grid item xs={10} className={styles.titleHeader}>
           <svg viewBox="0 0 300 26" className={styles.svgTitle}>
-            <text x="0" y="22">
+            <text x="0" dx="0" dy="1.2em">
               {rootStore.homeStore.page.name}
             </text>
           </svg>
@@ -97,6 +133,7 @@ const PublicHome = observer(() => {
       {rootStore.homeStore.pageLoading && !rootStore.homeStore.pageError && (
         <InitialPage />
       )}
+      {rootStore.homeStore.pageError && <HomeInitView />}
     </>
   );
 });

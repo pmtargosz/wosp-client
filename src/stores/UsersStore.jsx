@@ -44,6 +44,12 @@ export class UsersStore {
     });
   }
 
+  removeCity(city) {
+    this.users = this.users.map((user) =>
+      user.city === city ? { ...user, city: undefined } : user
+    );
+  }
+
   async getUsers() {
     runInAction(() => {
       this.usersError = null;

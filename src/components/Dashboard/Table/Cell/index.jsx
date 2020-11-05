@@ -68,6 +68,6 @@ export const DeleteCell = ({ modalType }) => {
   );
 };
 
-export const BodyCell = ({ children }) => {
-  return <TableCell>{children}</TableCell>;
+export const BodyCell = ({ children, align }) => {
+  return <TableCell align={align}>{children}</TableCell>;
 };

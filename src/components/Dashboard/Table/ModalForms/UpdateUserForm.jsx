@@ -92,7 +92,6 @@ const UpdateUserForm = observer(({ title, id, username, city }) => {
             disabled={updateUserForm.isSubmitting}
             id="username"
             label="Nazwa użytkownika"
-            margin="normal"
             name="username"
             onChange={updateUserForm.handleChange}
             required
@@ -115,7 +114,6 @@ const UpdateUserForm = observer(({ title, id, username, city }) => {
             disabled={updateUserForm.isSubmitting}
             id="password"
             label="Nowe hasło"
-            margin="normal"
             name="password"
             onChange={updateUserForm.handleChange}
             required

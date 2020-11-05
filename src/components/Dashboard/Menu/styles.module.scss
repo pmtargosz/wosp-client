@@ -1,3 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .dashboardMenu {
   display: flex;
 
@@ -22,7 +24,7 @@
   }
 }
 
-@media screen and (min-width: "600px") {
+@media screen and (min-width: $small) {
   .dashboardMenu {
     .toolbarIcon {
       min-height: 64px;
