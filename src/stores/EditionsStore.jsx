@@ -28,7 +28,7 @@ export class EditionsStore {
       updateEditionError: observable,
       updateEdition: action,
       toggleActive: action,
-      toggleTimer: action,
+      // toggleTimer: action,
     });
   }
 
@@ -158,18 +158,19 @@ export class EditionsStore {
   }
 
   toggleActive(id) {
-    this.editions = this.editions.map((edition) =>
-      edition.id === id
-        ? { ...edition, isActive: !edition.isActive }
-        : { ...edition, isActive: false, activeTimer: false }
+    this.editions = this.editions.map(
+      (edition) =>
+        edition.id === id
+          ? { ...edition, isActive: !edition.isActive }
+          : { ...edition, isActive: false } //{ ...edition, isActive: false, activeTimer: false }
     );
   }
 
-  toggleTimer(id) {
-    this.editions = this.editions.map((edition) =>
-      edition.id === id
-        ? { ...edition, activeTimer: !edition.activeTimer }
-        : { ...edition, activeTimer: false }
-    );
-  }
+  // toggleTimer(id) {
+  //   this.editions = this.editions.map((edition) =>
+  //     edition.id === id
+  //       ? { ...edition, activeTimer: !edition.activeTimer }
+  //       : { ...edition, activeTimer: false }
+  //   );
+  // }
 }

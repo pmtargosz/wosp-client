@@ -55,7 +55,7 @@ const AddEditionForm = observer(({ title }) => {
           endDate: dateFns.date(endDate),
           target,
           isActive: false,
-          activeTimer: false,
+          // activeTimer: false,
         });
 
         if (rootStore.editionsStore.addEditionError) {

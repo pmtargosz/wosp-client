@@ -41,7 +41,7 @@ const TableEditionsView = observer(() => {
       startDate,
       endDate,
       isActive,
-      activeTimer,
+      // activeTimer,
     } = values;
     rootStore.editionsStore.toggleActive(id);
     await rootStore.editionsStore.updateEdition({
@@ -51,31 +51,31 @@ const TableEditionsView = observer(() => {
       startDate,
       endDate,
       isActive: !isActive,
-      activeTimer: isActive ? false : activeTimer,
+      // activeTimer: isActive ? false : activeTimer,
     });
   };
 
-  const handleChangeTimer = (values) => async () => {
-    const {
-      id,
-      name,
-      target,
-      startDate,
-      endDate,
-      isActive,
-      activeTimer,
-    } = values;
-    rootStore.editionsStore.toggleTimer(id);
-    await rootStore.editionsStore.updateEdition({
-      id,
-      name,
-      target,
-      startDate,
-      endDate,
-      isActive,
-      activeTimer: !activeTimer,
-    });
-  };
+  // const handleChangeTimer = (values) => async () => {
+  //   const {
+  //     id,
+  //     name,
+  //     target,
+  //     startDate,
+  //     endDate,
+  //     isActive,
+  //     // activeTimer,
+  //   } = values;
+  //   rootStore.editionsStore.toggleTimer(id);
+  //   await rootStore.editionsStore.updateEdition({
+  //     id,
+  //     name,
+  //     target,
+  //     startDate,
+  //     endDate,
+  //     isActive,
+  //     activeTimer: !activeTimer,
+  //   });
+  // };
 
   const tableBodyRows = toJS(rootStore.editionsStore.editions).map(
     (edition) => (
@@ -105,7 +105,7 @@ const TableEditionsView = observer(() => {
             />
           </Tooltip>
         </BodyCell>
-        <BodyCell align="center">
+        {/* <BodyCell align="center">
           <Tooltip title={edition.activeTimer ? "Dezaktywuj" : "Aktywuj"}>
             <Switch
               checked={edition.activeTimer}
@@ -115,7 +115,7 @@ const TableEditionsView = observer(() => {
               disabled={!edition.isActive}
             />
           </Tooltip>
-        </BodyCell>
+        </BodyCell> */}
         <DeleteCell
           modalType={
             <ModalRemove
@@ -139,7 +139,7 @@ const TableEditionsView = observer(() => {
             <TableCell align="center">Data Rozpoczecia</TableCell>
             <TableCell align="center">Godzina Zakończenia</TableCell>
             <TableCell align="center">Status</TableCell>
-            <TableCell align="center">Aktywuj czas</TableCell>
+            {/* <TableCell align="center">Aktywuj czas</TableCell> */}
             <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>

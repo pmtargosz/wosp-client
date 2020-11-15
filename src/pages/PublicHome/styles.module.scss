@@ -28,7 +28,6 @@
       stroke: black;
       text-anchor: middle;
       text-transform: uppercase;
-      transform: translateX(50%);
     }
   }
 
@@ -118,6 +117,60 @@
   }
 }
 
+.counterContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.counterSvgText {
+  flex: 1 100%;
+  text {
+    fill: white;
+    font-size: 10px;
+    line-height: 1em;
+    paint-order: stroke;
+    stroke-linecap: butt;
+    stroke-linejoin: round;
+    stroke-width: 6px;
+    stroke: black;
+    text-anchor: end;
+  }
+}
+
+.counters {
+  display: flex;
+  flex: 1 auto;
+  justify-content: space-between;
+}
+
+.counter {
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: center;
+  margin: 0 6px;
+  padding: 12px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+
+.counterNumber {
+  font-size: calc(42px + (62 - 42) * ((100vw - 320px) / (1920 - 320)));
+  font-weight: bold;
+}
+
+.counterText {
+  flex: 1 100%;
+  font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));
+  text-align: center;
+}
+
 @media screen and (min-width: $small) {
   .container {
     .city {
@@ -156,5 +209,13 @@
       max-width: 200px;
       order: 3;
     }
+  }
+
+  .counterSvgText {
+    flex: 1 auto;
+  }
+
+  .counters {
+    flex: 0;
   }
 }

@@ -11,6 +11,8 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import { socket } from "../../config";
+
 import { RootStoresContext } from "../../stores/RootStore";
 
 import styles from "./styles.module.scss";
@@ -28,15 +30,42 @@ const DashboardUser = observer(() => {
     getUser();
   }, [getUser]);
 
+  // Connect to socket
+  useEffect(() => {
+    socket.open();
+
+    socket.on("update_cities", (data) => {
+      rootStore.usersStore.updateUserCity(data);
+    });
+
+    socket.on("disconnect", (reason) => {
+      if (reason === "io server disconnect") {
+        socket.connect();
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [rootStore.usersStore]);
+
   const handleClick = (action) => () => {
-    rootStore.usersStore.updateUserCity({
+    const people =
+      action === "remove"
+        ? rootStore.usersStore.user.city.people > 0
+          ? rootStore.usersStore.user.city.people - 1
+          : 0
+        : rootStore.usersStore.user.city.people + 1;
+
+    // rootStore.usersStore.updateUserCity({
+    //   id: rootStore.usersStore.user.city.id,
+    //   people,
+    // });
+
+    socket.emit("update_cities", {
       id: rootStore.usersStore.user.city.id,
-      people:
-        action === "remove"
-          ? rootStore.usersStore.user.city.people > 0
-            ? rootStore.usersStore.user.city.people - 1
-            : 0
-          : rootStore.usersStore.user.city.people + 1,
+      name: rootStore.usersStore.user.city.name,
+      people,
     });
   };
 

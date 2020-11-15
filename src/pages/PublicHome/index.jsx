@@ -1,7 +1,11 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import { Container, Grid } from "@material-ui/core";
+
+import DateFnsAdapter from "@date-io/date-fns";
+
+import { socket } from "../../config";
 
 import { RootStoresContext } from "../../stores/RootStore";
 
@@ -82,8 +86,141 @@ const ResultItem = ({ name, people, target }) => {
   );
 };
 
+export const calculateTimeLeft = (date, currentDate) => {
+  const difference = date - currentDate;
+  let timeLeft = null;
+
+  if (difference > 0) {
+    timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  }
+
+  return timeLeft;
+};
+
+const Counter = () => {
+  const dateFns = new DateFnsAdapter();
+  const rootStore = useContext(RootStoresContext);
+  const [timeToStart, setTimeToStart] = useState(
+    calculateTimeLeft(
+      +dateFns.date(rootStore.homeStore.page.startDate),
+      +dateFns.date()
+    )
+  );
+
+  const [timeToEnd, setTimeToEnd] = useState(
+    calculateTimeLeft(
+      +dateFns.date(rootStore.homeStore.page.endDate),
+      +dateFns.date()
+    )
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeToStart(
+        calculateTimeLeft(
+          +dateFns.date(rootStore.homeStore.page.startDate),
+          +dateFns.date()
+        )
+      );
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeToEnd(
+        calculateTimeLeft(
+          +dateFns.date(rootStore.homeStore.page.endDate),
+          +dateFns.date()
+        )
+      );
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
+
+  const hours = timeToStart
+    ? timeToStart.hours + timeToStart.days * 24
+    : timeToEnd
+    ? timeToEnd.hours + timeToEnd.days * 24
+    : 0;
+
+  const minutes = timeToStart
+    ? timeToStart.minutes
+    : timeToEnd
+    ? timeToEnd.minutes
+    : 0;
+
+  const seconds = timeToStart
+    ? timeToStart.seconds
+    : timeToEnd
+    ? timeToEnd.seconds
+    : 0;
+
+  return (
+    <div className={styles.counterContainer}>
+      <svg viewBox="0 0 200 18" className={styles.counterSvgText}>
+        <text x="98%" dx="0" dy="1.2em">
+          {`${
+            timeToStart
+              ? "do rozpoczęcia pozostało"
+              : timeToEnd
+              ? "do zakończenia pozostało"
+              : "koniec"
+          }`}
+        </text>
+      </svg>
+      <div className={styles.counters}>
+        <div className={styles.counter}>
+          <span className={styles.counterNumber}>
+            {hours > 9 ? hours : `0${hours}`}
+          </span>
+          <span className={styles.counterText}>godz.</span>
+        </div>
+        <div className={styles.counter}>
+          <span className={styles.counterNumber}>
+            {minutes > 9 ? minutes : `0${minutes}`}
+          </span>
+          <span className={styles.counterText}>min.</span>
+        </div>
+        <div className={styles.counter}>
+          <span className={styles.counterNumber}>
+            {seconds > 9 ? seconds : `0${seconds}`}
+          </span>
+          <span className={styles.counterText}>sek.</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const HomeView = () => {
   const rootStore = useContext(RootStoresContext);
+
+  // Connect to socket
+  useEffect(() => {
+    socket.open();
+
+    socket.on("update_cities", (data) => {
+      rootStore.homeStore.socketUpdateCity(data);
+    });
+
+    socket.on("disconnect", (reason) => {
+      if (reason === "io server disconnect") {
+        socket.connect();
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [rootStore.homeStore]);
+
   const displayResults = rootStore.homeStore.page.cities.map((city) => (
     <ResultItem
       key={city.name}
@@ -103,13 +240,16 @@ const HomeView = () => {
       <Grid container spacing={4} justify="center">
         <Grid item xs={10} className={styles.titleHeader}>
           <svg viewBox="0 0 300 26" className={styles.svgTitle}>
-            <text x="0" dx="0" dy="1.2em">
+            <text x="50%" dx="0" dy="1.2em">
               {rootStore.homeStore.page.name}
             </text>
           </svg>
         </Grid>
         <Grid item xs={10} className={styles.results}>
           {displayResults}
+        </Grid>
+        <Grid item xs={10} className={styles.time}>
+          <Counter />
         </Grid>
       </Grid>
     </Container>

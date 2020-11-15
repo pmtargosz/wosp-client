@@ -45,12 +45,12 @@ const UpdateEditionForm = observer(
           const { name, startDate, startDateTime, endDate, target } = values;
           const date = dateFns.format(startDate, "yyyy-MM-dd"); //dd/MM/yyyy
           const time = dateFns.format(startDateTime, "HH:mm"); //HH:mm
-
+          const endTime = dateFns.format(endDate, "HH:mm"); //HH:mm
           await rootStore.editionsStore.updateEdition({
             id: id,
             name,
             startDate: `${date} ${time}`,
-            endDate: dateFns.date(endDate),
+            endDate: `${date} ${endTime}`,
             target,
           });
 

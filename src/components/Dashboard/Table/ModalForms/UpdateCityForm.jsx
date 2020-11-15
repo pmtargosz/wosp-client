@@ -12,6 +12,8 @@ import {
   TextField,
 } from "@material-ui/core";
 
+import { socket } from "../../../../config";
+
 import { RootStoresContext } from "../../../../stores/RootStore";
 
 import styles from "./styles.module.scss";
@@ -39,6 +41,9 @@ const UpdateCityForm = observer(({ title, id, name, people }) => {
           setFieldError("name", rootStore.citiesStore.updateCityError);
           return;
         }
+
+        socket.emit("update_cities", { id, ...values });
+
         rootStore.alertStore.setType("success");
         rootStore.alertStore.setMsg("Dane miasta zostały uaktualnione!");
         rootStore.alertStore.setOpen(true);

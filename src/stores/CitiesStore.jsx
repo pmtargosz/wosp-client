@@ -30,6 +30,7 @@ export class CitiesStore {
       addCity: action,
       updateCityError: observable,
       updateCity: action,
+      socketUpdateCity: action,
     });
   }
 
@@ -153,5 +154,11 @@ export class CitiesStore {
         this.updateCityError = error.message;
       });
     }
+  }
+
+  socketUpdateCity(val) {
+    this.cities = this.cities.map((city) =>
+      city.id === val.id ? { ...val } : city
+    );
   }
 }

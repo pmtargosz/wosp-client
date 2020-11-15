@@ -20,6 +20,7 @@ export class HomeStore {
       pageLoading: observable,
       pageError: observable,
       getPage: action,
+      socketUpdateCity: action,
     });
   }
 
@@ -50,5 +51,12 @@ export class HomeStore {
         this.page = {};
       });
     }
+  }
+
+  socketUpdateCity(val) {
+    const cities = this.page.cities.map((city) =>
+      city.name === val.name ? { name: val.name, people: val.people } : city
+    );
+    this.page = { ...this.page, cities: cities };
   }
 }

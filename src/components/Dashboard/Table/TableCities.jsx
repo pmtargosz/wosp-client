@@ -12,6 +12,8 @@ import {
   TableRow,
 } from "@material-ui/core";
 
+import { socket } from "../../../config";
+
 import { RootStoresContext } from "../../../stores/RootStore";
 
 import styles from "./styles.module.scss";
@@ -22,6 +24,25 @@ import UpdateCityForm from "../Table/ModalForms/UpdateCityForm";
 
 const TableCitiesView = observer(() => {
   const rootStore = useContext(RootStoresContext);
+
+  useEffect(() => {
+    socket.open();
+
+    socket.on("update_cities", (data) => {
+      rootStore.citiesStore.socketUpdateCity(data);
+    });
+
+    socket.on("disconnect", (reason) => {
+      if (reason === "io server disconnect") {
+        socket.connect();
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [rootStore.citiesStore]);
+
   const handleRemoveUser = (id, city) => async () => {
     await rootStore.citiesStore.removeCity(id);
     rootStore.usersStore.removeCity(city);
