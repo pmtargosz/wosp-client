@@ -43,7 +43,6 @@ export class UsersStore {
       clearUser: observable,
     });
   }
-
   removeCity(city) {
     this.users = this.users.map((user) =>
       user.city === city ? { ...user, city: undefined } : user

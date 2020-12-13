@@ -96,7 +96,6 @@ export class EditionsStore {
       runInAction(() => {
         this.addEditionError = null;
       });
-      console.log(JSON.stringify(val));
       const request = await fetch(
         `${process.env.REACT_APP_API}/edition/create`,
         {

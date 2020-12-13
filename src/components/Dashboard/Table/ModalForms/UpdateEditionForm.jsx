@@ -43,14 +43,16 @@ const UpdateEditionForm = observer(
       onSubmit: async (values, { setFieldError }) => {
         try {
           const { name, startDate, startDateTime, endDate, target } = values;
+
           const date = dateFns.format(startDate, "yyyy-MM-dd"); //dd/MM/yyyy
           const time = dateFns.format(startDateTime, "HH:mm"); //HH:mm
           const endTime = dateFns.format(endDate, "HH:mm"); //HH:mm
+
           await rootStore.editionsStore.updateEdition({
             id: id,
             name,
-            startDate: `${date} ${time}`,
-            endDate: `${date} ${endTime}`,
+            startDate: new Date(`${date} ${time}`),
+            endDate: new Date(`${date} ${endTime}`),
             target,
           });
 
@@ -86,7 +88,7 @@ const UpdateEditionForm = observer(
               className={styles.input}
               disabled={updateEditionForm.isSubmitting}
               id="name"
-              label="Wydażenie"
+              label="Wydarzenie"
               name="name"
               onChange={updateEditionForm.handleChange}
               required
@@ -174,7 +176,7 @@ const UpdateEditionForm = observer(
                 type="submit"
                 disabled={updateEditionForm.isSubmitting}
               >
-                Edutuj
+                Edytuj
               </Button>
               <Button variant="contained" onClick={handleClose}>
                 Anuluj

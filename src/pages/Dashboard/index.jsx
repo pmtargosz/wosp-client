@@ -27,6 +27,7 @@ const Admin = observer(() => {
 
 const Dashboard = () => {
   const rootStore = useContext(RootStoresContext);
+
   return (
     <>
       <DashboardHeader />

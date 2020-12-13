@@ -64,7 +64,7 @@ const AddEditionForm = observer(({ title }) => {
         }
 
         rootStore.alertStore.setType("success");
-        rootStore.alertStore.setMsg("Wydażenie zostało dodane!");
+        rootStore.alertStore.setMsg("Wydarzenie zostało dodane!");
         rootStore.alertStore.setOpen(true);
 
         rootStore.modalStore.setModal(false);
@@ -90,7 +90,7 @@ const AddEditionForm = observer(({ title }) => {
             className={styles.input}
             disabled={addEditionForm.isSubmitting}
             id="name"
-            label="Wydażenie"
+            label="Wydarzenie"
             name="name"
             onChange={addEditionForm.handleChange}
             required

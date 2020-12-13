@@ -47,7 +47,7 @@ const DashboardAdmin = () => {
             <TableHeader
               title="Add"
               icon={AddIcon}
-              modalType={<AddEditionForm title="Dodaj wydażenie:" />}
+              modalType={<AddEditionForm title="Dodaj wydarzenie:" />}
             >
               Wydarzenia
             </TableHeader>

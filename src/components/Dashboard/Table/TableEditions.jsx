@@ -34,15 +34,7 @@ const TableEditionsView = observer(() => {
   };
 
   const handleChangeActive = (values) => async () => {
-    const {
-      id,
-      name,
-      target,
-      startDate,
-      endDate,
-      isActive,
-      // activeTimer,
-    } = values;
+    const { id, name, target, startDate, endDate, isActive } = values;
     rootStore.editionsStore.toggleActive(id);
     await rootStore.editionsStore.updateEdition({
       id,
@@ -51,38 +43,15 @@ const TableEditionsView = observer(() => {
       startDate,
       endDate,
       isActive: !isActive,
-      // activeTimer: isActive ? false : activeTimer,
     });
   };
-
-  // const handleChangeTimer = (values) => async () => {
-  //   const {
-  //     id,
-  //     name,
-  //     target,
-  //     startDate,
-  //     endDate,
-  //     isActive,
-  //     // activeTimer,
-  //   } = values;
-  //   rootStore.editionsStore.toggleTimer(id);
-  //   await rootStore.editionsStore.updateEdition({
-  //     id,
-  //     name,
-  //     target,
-  //     startDate,
-  //     endDate,
-  //     isActive,
-  //     activeTimer: !activeTimer,
-  //   });
-  // };
 
   const tableBodyRows = toJS(rootStore.editionsStore.editions).map(
     (edition) => (
       <TableRow key={edition.id} className={styles.row}>
         <EditCell
           modalType={
-            <UpdateEditionForm title="Edutuj wydażenie:" {...edition} />
+            <UpdateEditionForm title="Edytuj wydarzenie:" {...edition} />
           }
         />
         <BodyCell>{edition.name}</BodyCell>
@@ -105,22 +74,11 @@ const TableEditionsView = observer(() => {
             />
           </Tooltip>
         </BodyCell>
-        {/* <BodyCell align="center">
-          <Tooltip title={edition.activeTimer ? "Dezaktywuj" : "Aktywuj"}>
-            <Switch
-              checked={edition.activeTimer}
-              name={edition.id}
-              onChange={handleChangeTimer(edition)}
-              color="primary"
-              disabled={!edition.isActive}
-            />
-          </Tooltip>
-        </BodyCell> */}
         <DeleteCell
           modalType={
             <ModalRemove
               callback={handleRemove(edition.id)}
-              msg={`Czy napewno chcesz usunać wydażenie: ${edition.name}?`}
+              msg={`Czy napewno chcesz usunać wydarzenie: ${edition.name}?`}
             />
           }
         />
@@ -139,7 +97,6 @@ const TableEditionsView = observer(() => {
             <TableCell align="center">Data Rozpoczecia</TableCell>
             <TableCell align="center">Godzina Zakończenia</TableCell>
             <TableCell align="center">Status</TableCell>
-            {/* <TableCell align="center">Aktywuj czas</TableCell> */}
             <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
