@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import InitialPage from "./pages/InitialPage";
 import Login from "./pages/Login";
 import PublicHome from "./pages/PublicHome";
+import Dyplom from "./pages/Dyplom";
 
 const App = observer(() => {
   const rootStore = useContext(RootStoresContext);
@@ -65,6 +66,9 @@ const App = observer(() => {
         </Route>
         <Route path="/admin">
           <Redirect to="/dashboard" />
+        </Route>
+        <Route path="/dyplom/:city/:name">
+          <Dyplom />
         </Route>
         <Route path="/">
           <PublicHome />
