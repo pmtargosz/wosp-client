@@ -13,39 +13,13 @@ import {
 
 import { socket } from "../../config";
 
-import DateFnsAdapter from "@date-io/date-fns";
-
 import { RootStoresContext } from "../../stores/RootStore";
 
 import styles from "./styles.module.scss";
 import { Add, Remove } from "@material-ui/icons";
-import { useState } from "react";
 
 const DashboardUser = observer(() => {
   const rootStore = useContext(RootStoresContext);
-
-  const getPage = useCallback(() => {
-    rootStore.homeStore.getPage();
-  }, [rootStore.homeStore]);
-
-  useEffect(() => {
-    getPage();
-  }, [getPage]);
-
-  const [isDisable, setDisable] = useState(true);
-  const dateFns = new DateFnsAdapter();
-  useEffect(() => {
-    const time = setInterval(() => {
-      setDisable(
-        +dateFns.date(rootStore.homeStore.page.endDate) - +dateFns.date() < 0 ||
-          +dateFns.date(rootStore.homeStore.page.startDate) - +dateFns.date() >
-            0
-      );
-    }, 1000);
-
-    return () => clearInterval(time);
-  });
-
   const getUser = useCallback(() => {
     !rootStore.usersStore.userError &&
       Object.keys(rootStore.usersStore.user).length === 0 &&
@@ -61,9 +35,7 @@ const DashboardUser = observer(() => {
     socket.open();
 
     socket.on("update_cities", (data) => {
-      if (rootStore.usersStore.user.city.id === data.id) {
-        rootStore.usersStore.updateUserCity(data);
-      }
+      rootStore.usersStore.updateUserCity(data);
     });
 
     socket.on("disconnect", (reason) => {
@@ -83,7 +55,12 @@ const DashboardUser = observer(() => {
         ? rootStore.usersStore.user.city.people > 0
           ? rootStore.usersStore.user.city.people - 1
           : 0
-        : rootStore.usersStore.user.city.people + 1;
+        : !!rootStore.usersStore.user.city.people ? rootStore.usersStore.user.city.people + 1 : 1;
+
+    // rootStore.usersStore.updateUserCity({
+    //   id: rootStore.usersStore.user.city.id,
+    //   people,
+    // });
 
     socket.emit("update_cities", {
       id: rootStore.usersStore.user.city.id,
@@ -112,17 +89,15 @@ const DashboardUser = observer(() => {
             <Grid item xs={12}>
               <Paper className={styles.paperUser}>
                 <Tooltip title="Odejmij">
-                  <span>
-                    <Fab
-                      disabled={rootStore.usersStore.userLoading || isDisable}
-                      size="large"
-                      color="secondary"
-                      aria-label="Odejmij"
-                      onClick={handleClick("remove")}
-                    >
-                      <Remove />
-                    </Fab>
-                  </span>
+                  <Fab
+                    disabled={rootStore.usersStore.updateUserCityLoading}
+                    size="large"
+                    color="secondary"
+                    aria-label="Odejmij"
+                    onClick={handleClick("remove")}
+                  >
+                    <Remove />
+                  </Fab>
                 </Tooltip>
                 <Box className={styles.main}>
                   <Typography
@@ -145,21 +120,19 @@ const DashboardUser = observer(() => {
                     variant="h4"
                     className={styles.title}
                   >
-                    {rootStore.usersStore.user.city.people}
+                    {!!rootStore.usersStore.user.city.people ? rootStore.usersStore.user.city.people: 0 }
                   </Typography>
                 </Box>
                 <Tooltip title="Dodaj">
-                  <span>
-                    <Fab
-                      disabled={rootStore.usersStore.userLoading || isDisable}
-                      size="large"
-                      color="primary"
-                      aria-label="Dadaj"
-                      onClick={handleClick("add")}
-                    >
-                      <Add />
-                    </Fab>
-                  </span>
+                  <Fab
+                    disabled={rootStore.usersStore.updateUserCityLoading}
+                    size="large"
+                    color="primary"
+                    aria-label="Dadaj"
+                    onClick={handleClick("add")}
+                  >
+                    <Add />
+                  </Fab>
                 </Tooltip>
               </Paper>
             </Grid>

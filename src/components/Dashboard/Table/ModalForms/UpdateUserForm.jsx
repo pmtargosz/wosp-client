@@ -52,7 +52,7 @@ const UpdateUserForm = observer(({ title, id, username, city }) => {
         await rootStore.usersStore.updateUser({
           id: id,
           username: username,
-          password: password,
+          password: password === '' ? undefined : password,
           cityId: cityId.length > 0 ? cityId : undefined,
         });
         if (rootStore.usersStore.updateUserError) {

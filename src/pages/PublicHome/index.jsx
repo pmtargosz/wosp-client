@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { Container, Grid } from "@material-ui/core";
 
 import DateFnsAdapter from "@date-io/date-fns";
+
 import { socket } from "../../config";
 
 import { RootStoresContext } from "../../stores/RootStore";
@@ -25,21 +26,21 @@ const HomeInitView = () => {
       <Grid container spacing={4} alignItems="center" justify="center">
         <Grid item xs={10} className={styles.titleHeader}>
           <svg viewBox="0 0 300 26" className={styles.svgTitle}>
-            <text x="50%" dx="0" dy="1.2em">
+            <text x="0" dx="0" dy="1.2em">
               Wiosłowanie dla WOŚP
             </text>
           </svg>
         </Grid>
         <Grid item xs={10} className={styles.titleSub}>
           <svg viewBox="0 0 300 150" className={styles.svgTitle}>
-            <text x="50%" dx="0" dy="1.2em">
-              <tspan dy="1.2em" x="50%" dx="0">
+            <text x="0" dy="1.2em">
+              <tspan dy="1.2em" x="0" dx="0">
                 Już
               </tspan>
-              <tspan dy="1.2em" x="50%" dx="0">
+              <tspan dy="1.2em" x="0" dx="0">
                 niedługo
               </tspan>
-              <tspan dy="1.2em" x="50%" dx="0">
+              <tspan dy="1.2em" x="0" dx="0">
                 startujemy!
               </tspan>
             </text>
@@ -220,7 +221,7 @@ const HomeView = () => {
     };
   }, [rootStore.homeStore]);
 
-  const displayResults = rootStore.homeStore.page.cities.map((city) => (
+  const displayResults = rootStore.homeStore.page.cities.sort((a, b) => b.people - a.people).map((city) => (
     <ResultItem
       key={city.name}
       name={city.name}
