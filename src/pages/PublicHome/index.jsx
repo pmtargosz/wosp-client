@@ -18,9 +18,9 @@ import { ReactComponent as IndorRowing } from "../../files/indor_rowing.svg";
 const SocialMedia = () => {
   const rootStore = useContext(RootStoresContext);
 
-  const displaySocialMedia = rootStore.homeStore.page.socialMedia.map((social, index) => (
+  const displaySocialMedia = rootStore.homeStore.page.socialMedia ? rootStore.homeStore.page.socialMedia.map((social, index) => (
     <a key={index} className={`${styles.socialMediaLink} ${social.type === 'yt' ? styles.socialMediaLinkYt : styles.socialMediaLinkFb}`} target="_blank" rel="noopener noreferrer" href={social.url} title={social.name}>{social.name}</a>
-  ))
+  )) : ''
 
   return (
     <div className={styles.socialMedia}>
