@@ -37,6 +37,7 @@ const HomeInitView = () => {
       maxWidth={false}
       className={styles.container}
     >
+      <SocialMedia />
       <Grid container spacing={4} alignItems="center" justify="center">
         <Grid item xs={10} className={styles.titleHeader}>
           <svg viewBox="0 0 300 26" className={styles.svgTitle}>
