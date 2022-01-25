@@ -8,6 +8,7 @@ import { AlertStore } from "./AlertStore";
 import { ModalStore } from "./ModalStore";
 import { EditionsStore } from "./EditionsStore";
 import { HomeStore } from "./HomeStore";
+import { SocialMediaStore } from "./SocialMediaStore";
 
 export class RootStore {
   authStore = new AuthStore(this);
@@ -18,6 +19,7 @@ export class RootStore {
   modalStore = new ModalStore(this);
   alertStore = new AlertStore(this);
   homeStore = new HomeStore(this);
+  socialMediaStore = new SocialMediaStore(this);
 }
 
 export const RootStoresContext = createContext(new RootStore());

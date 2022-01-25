@@ -19,26 +19,27 @@ import styles from "./styles.module.scss";
 import Error from "../Table/Error";
 import { BodyCell, DeleteCell, EditCell } from "../Table/Cell";
 import { ModalRemove } from "../../Modal";
-import UpdateUserForm from "../Table/ModalForms/UpdateUserForm";
+import UpdateSocialMediaForm from "../Table/ModalForms/UpdateSocialMediaForm";
 
-const TableUsersView = observer(() => {
+const TableSocialMediaView = observer(() => {
   const rootStore = useContext(RootStoresContext);
   const handleRemoveUser = (id) => async () => {
-    await rootStore.usersStore.removeUser(id);
+    await rootStore.socialMediaStore.removeSocialMedia(id);
   };
 
-  const tableBodyRows = toJS(rootStore.usersStore.users).map((user) => (
-    <TableRow key={user.id} className={styles.row}>
+  const tableBodyRows = toJS(rootStore.socialMediaStore.socialMedia).map((social) => (
+    <TableRow key={social.id} className={styles.row}>
       <EditCell
-        modalType={<UpdateUserForm title="Edytuj koordynatora:" {...user} />}
+        modalType={<UpdateSocialMediaForm title="Edytuj Social Media:" {...social} />}
       />
-      <BodyCell>{user.username}</BodyCell>
-      <BodyCell>{user.city}</BodyCell>
+      <BodyCell>{social.name}</BodyCell>
+      <BodyCell>{social.url}</BodyCell>
+      <BodyCell>{social.type === 'fb'? 'Facebook' : 'YouTube'}</BodyCell>
       <DeleteCell
         modalType={
           <ModalRemove
-            callback={handleRemoveUser(user.id)}
-            msg={`Czy napewno chcesz usunać koordynatora: ${user.username}?`}
+            callback={handleRemoveUser(social.id)}
+            msg={`Czy napewno chcesz usunać: ${social.name}?`}
           />
         }
       />
@@ -47,12 +48,13 @@ const TableUsersView = observer(() => {
 
   return (
     <TableContainer className={styles.container}>
-      <Table stickyHeader aria-label="Users Table">
+      <Table stickyHeader aria-label="Social Media Table">
         <TableHead>
           <TableRow>
             <TableCell align="center"></TableCell>
-            <TableCell align="left">Koordynator</TableCell>
-            <TableCell align="left">Miasto</TableCell>
+            <TableCell align="left">Nazwa</TableCell>
+            <TableCell align="left">Url</TableCell>
+            <TableCell align="left">Typ</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
@@ -62,25 +64,25 @@ const TableUsersView = observer(() => {
   );
 });
 
-const TableUsers = observer(() => {
+const TableSocialMedia = observer(() => {
   const rootStore = useContext(RootStoresContext);
 
   useEffect(() => {
-    rootStore.usersStore.getUsers();
-  }, [rootStore.usersStore]);
+    rootStore.socialMediaStore.getSocialMedia();
+  }, [rootStore.socialMediaStore]);
 
-  if (rootStore.usersStore.usersLoading) {
+  if (rootStore.socialMediaStore.socialMediaLoading) {
     return <CircularProgress className={styles.progress} />;
   }
 
   if (
-    !rootStore.usersStore.usersLoading &&
-    rootStore.usersStore.users.length > 0
+    !rootStore.socialMediaStore.socialMediaLoading &&
+    rootStore.socialMediaStore.socialMedia.length > 0
   ) {
-    return <TableUsersView />;
+    return <TableSocialMediaView />;
   }
 
   return <Error />;
 });
 
-export default TableUsers;
+export default TableSocialMedia;

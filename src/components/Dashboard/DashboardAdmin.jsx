@@ -9,16 +9,18 @@ import TableHeader from "./Table/Header";
 import TableUsers from "./Table/TableUsers";
 import TableCities from "./Table/TableCities";
 import TableEditions from "./Table/TableEditions";
+import TableSocialMedia from "./Table/TableSocialMedia";
 
 import AddCityForm from "./Table/ModalForms/AddCityForm";
 import AddUserForm from "./Table/ModalForms/AddUserForm";
 import AddEditionForm from "./Table/ModalForms/AddEditionForm";
+import AddSocialMediaForm from './Table/ModalForms/AddSocialMediaForm'
 
 const DashboardAdmin = () => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} >
           <Paper className={styles.paper}>
             <TableHeader
               title="Add"
@@ -52,6 +54,18 @@ const DashboardAdmin = () => {
               Wydarzenia
             </TableHeader>
             <TableEditions />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={styles.paper}>
+            <TableHeader
+              title="Add"
+              icon={AddIcon}
+              modalType={<AddSocialMediaForm title="Dodaj Social Media:" />}
+            >
+              Social Media
+            </TableHeader>
+            <TableSocialMedia />
           </Paper>
         </Grid>
       </Grid>

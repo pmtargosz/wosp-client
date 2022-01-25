@@ -1,5 +1,37 @@
 @import "../../styles/variables.scss";
 
+.socialMedia {
+  display: flex;
+  left: 20px;
+  position: absolute;
+  top: 20px;
+}
+
+.socialMediaLink {
+  background-color: #fff;
+  border-radius: 100%;
+  display: block;
+  height: 30px;
+  margin: 0 6px;
+  overflow: hidden;
+  text-indent: -999px;
+  width: 30px;
+}
+
+.socialMediaLinkYt {
+  background-image: url("../../files/youtube.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.socialMediaLinkFb {
+  background-image: url("../../files/facebook.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .container {
   -webkit-font-smoothing: antialiased;
   background-image: url("../../files/background.png");

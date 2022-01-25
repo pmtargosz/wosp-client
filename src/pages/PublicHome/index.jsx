@@ -15,6 +15,20 @@ import InitialPage from "../InitialPage";
 
 import { ReactComponent as IndorRowing } from "../../files/indor_rowing.svg";
 
+const SocialMedia = () => {
+  const rootStore = useContext(RootStoresContext);
+
+  const displaySocialMedia = rootStore.homeStore.page.socialMedia.map((social, index) => (
+    <a key={index} className={`${styles.socialMediaLink} ${social.type === 'yt' ? styles.socialMediaLinkYt : styles.socialMediaLinkFb}`} target="_blank" rel="noopener noreferrer" href={social.url} title={social.name}>{social.name}</a>
+  ))
+
+  return (
+    <div className={styles.socialMedia}>
+      {displaySocialMedia}
+    </div>
+  )
+}
+
 const HomeInitView = () => {
   return (
     <Container
@@ -237,6 +251,7 @@ const HomeView = () => {
       maxWidth={false}
       className={styles.container}
     >
+      <SocialMedia />
       <Grid container spacing={4} justify="center">
         <Grid item xs={10} className={styles.titleHeader}>
           <svg viewBox="0 0 300 26" className={styles.svgTitle}>
