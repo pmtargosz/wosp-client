@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React, { useContext, useEffect, useCallback, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import {
@@ -13,13 +13,38 @@ import {
 
 import { socket } from "../../config";
 
+import DateFnsAdapter from "@date-io/date-fns";
+
 import { RootStoresContext } from "../../stores/RootStore";
 
 import styles from "./styles.module.scss";
 import { Add, Remove } from "@material-ui/icons";
 
 const DashboardUser = observer(() => {
-  const rootStore = useContext(RootStoresContext);
+  const rootStore = useContext(RootStoresContext); 
+
+  const getPage = useCallback(() => {
+    rootStore.homeStore.getPage();
+  }, [rootStore.homeStore]);
+
+  useEffect(() => {
+    getPage();
+  }, [getPage]);
+
+  const [isDisable, setDisable] = useState(true);
+  const dateFns = new DateFnsAdapter();
+  useEffect(() => {
+    const time = setInterval(() => {
+      setDisable(
+        +dateFns.date(rootStore.homeStore.page.endDate) - +dateFns.date() < 0 ||
+          +dateFns.date(rootStore.homeStore.page.startDate) - +dateFns.date() >
+            0
+      );
+    }, 1000);
+
+    return () => clearInterval(time);
+  });
+
   const getUser = useCallback(() => {
     !rootStore.usersStore.userError &&
       Object.keys(rootStore.usersStore.user).length === 0 &&
@@ -35,7 +60,10 @@ const DashboardUser = observer(() => {
     socket.open();
 
     socket.on("update_cities", (data) => {
-      rootStore.usersStore.updateUserCity(data);
+
+      if (rootStore.usersStore.user.city.id === data.id) {
+        rootStore.usersStore.updateUserCity(data);
+      }
     });
 
     socket.on("disconnect", (reason) => {
@@ -56,11 +84,6 @@ const DashboardUser = observer(() => {
           ? rootStore.usersStore.user.city.people - 1
           : 0
         : !!rootStore.usersStore.user.city.people ? rootStore.usersStore.user.city.people + 1 : 1;
-
-    // rootStore.usersStore.updateUserCity({
-    //   id: rootStore.usersStore.user.city.id,
-    //   people,
-    // });
 
     socket.emit("update_cities", {
       id: rootStore.usersStore.user.city.id,
@@ -90,7 +113,7 @@ const DashboardUser = observer(() => {
               <Paper className={styles.paperUser}>
                 <Tooltip title="Odejmij">
                   <Fab
-                    disabled={rootStore.usersStore.updateUserCityLoading}
+                    disabled={rootStore.usersStore.updateUserCityLoading || isDisable}
                     size="large"
                     color="secondary"
                     aria-label="Odejmij"
@@ -125,7 +148,7 @@ const DashboardUser = observer(() => {
                 </Box>
                 <Tooltip title="Dodaj">
                   <Fab
-                    disabled={rootStore.usersStore.updateUserCityLoading}
+                    disabled={rootStore.usersStore.updateUserCityLoading || isDisable}
                     size="large"
                     color="primary"
                     aria-label="Dadaj"
