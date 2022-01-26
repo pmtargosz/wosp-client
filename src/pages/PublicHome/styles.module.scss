@@ -152,6 +152,7 @@
 .counterContainer {
   display: flex;
   margin: 0 -16px;
+  flex-wrap: wrap;
 }
 
 .counterSvgText {
@@ -240,6 +241,10 @@
       max-width: 200px;
       order: 3;
     }
+  }
+
+  .counterContainer {
+    flex-wrap: nowrap;
   }
 
   .counterSvgText {
